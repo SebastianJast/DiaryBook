@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.register-container {
+  background-color: #c9d6ff;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-card {
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+.register-card-1 {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  height: 100%;
+  width: 400px;
+}
+
+.register-card h1 {
+  margin-bottom: 20px;
+}
+
+.register-card h2 {
+  color: #512da8;
+}
+
+.register-card p {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  margin: 1px 0;
+}
+
+.register-card button {
+  background-color: #512da8;
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.register-card label {
+  width: 100%;
+}
+
+.register-card input {
+  background-color: #eee;
+  border: none;
+  margin: 2px 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 250px;
+  outline: none;
+}
+
+.register-card-1 {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  height: 100%;
+}
+
+.register-card-2 {
+  background: linear-gradient(rgb(90, 89, 89), rgba(255, 255, 255, 0.2)),
+    url("../../public/images/quote.jpg");
+  background-size: cover;
+  position: absolute;
+  top: 0%;
+  right: 50%;
+  height: 100%;
+  width: 50%;
+  border-top-right-radius: 30%;
+  border-bottom-right-radius: 15%;
+  text-align: center;
+}
+
+.register-card-2-text {
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.register-card-2-text .button {
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 2px solid transparent;
+  border-color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.register-card-2-text h2 {
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.register-card-2-text p {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  .register-card {
+    width: 600px;
+    min-height: 880px;
+  }
+
+  .register-card-1 {
+    height: 40%;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .register-card-2 {
+    left: 0%;
+    height: 50%;
+    width: 100%;
+    border-top-right-radius: 0%;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .register-card {
+    width: 300px;
+  }
+}
+
