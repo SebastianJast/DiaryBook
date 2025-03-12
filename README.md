@@ -103,3 +103,7 @@ CREATE TABLE my_notes (
 ### Dashboard
 
 ![Dashboard Screenshot](./Frontend/public/images/dashboard.png)
+
+## Author
+- GitHub - [@SebastianJast](https://github.com/SebastianJast)
+- Website - [Sebastian](https://sebastianjast.github.io/Responsive_CV/)
