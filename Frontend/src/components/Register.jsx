@@ -20,8 +20,7 @@ export default function Register() {
     email: Yup.string()
       .required("*email is rquired")
       .matches(/@/, "Email must have @ character")
-      .min(3, "Email must be at least 3 characters")
-      .max(25, "Email must be at most 25 characters"),
+      .min(3, "Email must be at least 3 characters"),
 
     password: Yup.string()
       .required("*password is required")
