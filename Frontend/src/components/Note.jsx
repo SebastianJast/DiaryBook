@@ -3,6 +3,7 @@ import "../styles/note.css";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 function Note(props) {
   const [displayForm, setForm] = useState(false);
@@ -54,8 +55,11 @@ function Note(props) {
           <h1>{props.title}</h1>
           <p>{props.content}</p>
         </div>
-        <button onClick={handleClick}>
+         <button onClick={handleClick}>
           <DeleteOutlineIcon />
+        </button>
+         <button onClick={props.chatbot}>
+          <ChatBubbleOutlineIcon />
         </button>
         <button
           className={displayForm ? "show" : "hide"}

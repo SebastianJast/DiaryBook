@@ -137,10 +137,10 @@ export default function Register() {
         </div>
         <div className="register-card-2">
           <div className="register-card-2-text">
-            <h2>QuoteBook</h2>
+            <h2>DiaryBook</h2>
             <p>
-              The most beautiful thoughts from books in one place. Sign In and
-              dive into literature!
+              Collect the most beautiful thoughts from books in one place.
+              Register now or Sign In to dive into the world of literature!
             </p>
             <Link className="button" to="/">
               Sign In

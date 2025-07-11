@@ -81,10 +81,10 @@ export default function Login({ setToken }) {
         </div>
         <div className="login-card-2">
           <div className="login-card-2-text">
-            <h2>QuoteBook</h2>
+            <h2>DiaryBook</h2>
             <p>
-              The most beautiful thoughts from books in one place. Sign up and
-              dive into literature!
+              Welcome to your personal diary. Write freely, reflect deeply, and
+              keep your thoughts safe. Log in or sign up to begin your journey.
             </p>
             <Link className="button" to="/Register">
               Sign Up

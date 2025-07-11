@@ -8,7 +8,7 @@ function Header(props) {
     <header>
       <h1>
         <HighlightIcon />
-        QuoteBook
+        DiaryBook
       </h1>
       <Logout logout={props.logout} />
     </header>

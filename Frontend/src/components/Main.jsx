@@ -8,12 +8,14 @@ import CreateArea from "./CreateArea";
 import { getList, addItem, deleteItem, editItem } from "../services/list";
 import useToken from "./useToken";
 import { jwtDecode } from "jwt-decode";
+import Chatbot from "./Chatbot";
 
 function Main() {
   const [notes, setNotes] = useState([]);
   const [alert, setAlert] = useState(false);
   const { token, setToken } = useToken();
   const [userId, setUserId] = useState();
+  const [showChatbot, setShowChatbot] = useState(false);
 
   const mounted = useRef(true);
 
@@ -80,6 +82,11 @@ function Main() {
     setNotes([]);
   }
 
+  function chatbot() {
+    setShowChatbot((prev) => !prev)
+  }
+
+
   if (!token) {
     return <Login setToken={setToken} />;
   }
@@ -98,9 +105,11 @@ function Main() {
               content={noteItem.content}
               onDelete={deleteNote}
               onEdit={editNote}
+              chatbot={chatbot}
             />
           );
         })}
+      <Chatbot showChatbot={showChatbot} chatbot={chatbot}/>
       </div>
       <Footer />
     </div>
