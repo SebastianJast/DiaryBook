@@ -1,5 +1,5 @@
 
-# DairyBook
+# DiaryBook
 
 ## Description
 DiaryBook is a full-stack application where users can securely store, manage, and reflect on their personal thoughts and diary entries. Built with Node.js, Express, and PostgreSQL on the backend, and React on the frontend, it features JWT-based authentication to protect user data.
@@ -41,7 +41,7 @@ Integrated Gemini chatbot acts as your intelligent assistant, helping you to cap
 
 3. Set up PostgreSQL:
    ```sql
-   CREATE DATABASE dairy_book;
+   CREATE DATABASE diary_book;
    ```
 
 4. Run the development server:
