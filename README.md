@@ -1,20 +1,25 @@
 
-# QuoteBook
+# DairyBook
 
 ## Description
-QuoteBook is a full-stack application where users can store, manage, and view their personal quotes. Built with Node.js, Express, PostgreSQL for the backend, and React for the frontend, with JWT-based authentication.
+DiaryBook is a full-stack application where users can securely store, manage, and reflect on their personal thoughts and diary entries. Built with Node.js, Express, and PostgreSQL on the backend, and React on the frontend, it features JWT-based authentication to protect user data.
+
+Now with Gemini Chatbot!
+Integrated Gemini chatbot acts as your intelligent assistant, helping you to capture, organize, and explore your daily thoughts and reflections — making your diary experience more interactive and personalized.
 
 ## Features
 - User registration & login (JWT authentication)
 - CRUD operations for quotes
 - Random quote retrieval
 - Secure user data with bcrypt password hashing
+- Interactive Gemini chatbot to assist with diary writing and thought organization
 
 ## Technologies
 - Backend: Node.js, Express, PostgreSQL
 - Frontend: React
 - Authentication: JWT
 - Password hashing: bcrypt
+- Chatbot: Gemini AI integration
 
 ## Installation
 
@@ -23,7 +28,7 @@ QuoteBook is a full-stack application where users can store, manage, and view th
    ```env
    PG_USER=your_user
    PG_HOST=localhost
-   PG_DATABASE=quote_book
+   PG_DATABASE=dairy_book
    PG_PASSWORD=your_password
    PG_PORT=5432
    TOKEN_SECRET=your_token_secret
@@ -36,7 +41,7 @@ QuoteBook is a full-stack application where users can store, manage, and view th
 
 3. Set up PostgreSQL:
    ```sql
-   CREATE DATABASE quote_book;
+   CREATE DATABASE dairy_book;
    ```
 
 4. Run the development server:
