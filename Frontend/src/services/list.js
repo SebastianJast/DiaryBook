@@ -1,5 +1,7 @@
-export function getList(id,token) {
-  return fetch(`http://localhost:3000/all/${id}`, {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
+export function getList(id, token) {
+  return fetch(`${API_BASE_URL}/all/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

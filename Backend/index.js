@@ -21,7 +21,12 @@ const db = new pg.Client({
   port: process.env.PG_PORT,
 });
 
-db.connect();
+db.connect()
+  .then(() => console.log('Connected to PostgreSQL database'))
+  .catch((err) => {
+    console.error('Database connection error:', err);
+    process.exit(1);
+  });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -53,7 +58,7 @@ app.get("/all/:id", authenticateToken, async (req, res) => {
     ]);
     res.json(result.rows);
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("Notes fetch error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -68,7 +73,7 @@ app.get("/random", authenticateToken, async (req, res) => {
     const randomIndex = Math.floor(Math.random() * result.rows.length);
     res.json(result.rows[randomIndex]);
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("Random note error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -85,39 +90,65 @@ app.post("/notes/:id", authenticateToken, async (req, res) => {
     );
     res.json(result.rows);
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("Note creation error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 //Delete a note
 app.delete("/notes/:id", authenticateToken, async (req, res) => {
-  const id = parseInt(req.params.id);
+  const noteId = parseInt(req.params.id);
+  const userId = req.user.id; // Z JWT tokena
+  
   try {
-    const result = await db.query(
-      "DELETE FROM my_notes WHERE id = $1 RETURNING *;",
-      [id]
+    const checkOwnership = await db.query(
+      "SELECT user_id FROM my_notes WHERE id = $1",
+      [noteId]
     );
+    
+    if (checkOwnership.rows.length === 0) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+    
+    if (checkOwnership.rows[0].user_id !== userId) {
+      return res.status(403).json({ error: "Access denied" });
+    }
+    
+    const result = await db.query(
+      "DELETE FROM my_notes WHERE id = $1 AND user_id = $2 RETURNING *;",
+      [noteId, userId]
+    );
+    
     res.json(result.rows);
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("Note deletion error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 //Edit a note
 app.put("/notes/:id", authenticateToken, async (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  const id = parseInt(req.params.id);
+  const { title, content } = req.body;
+  const noteId = parseInt(req.params.id);
+  const userId = req.user.id;
+  
+  if (!title || !content) {
+    return res.status(400).json({ error: "Title and content are required" });
+  }
+  
   try {
     const result = await db.query(
-      "UPDATE my_notes SET title = $1, content = $2 WHERE id = $3 RETURNING *;",
-      [title, content, id]
+      "UPDATE my_notes SET title = $1, content = $2 WHERE id = $3 AND user_id = $4 RETURNING *;",
+      [title, content, noteId, userId]
     );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Note not found or access denied" });
+    }
+    
     res.json(result.rows);
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("Note update error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -150,7 +181,7 @@ app.post("/register", async (req, res) => {
       token,
     });
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("Registration error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
