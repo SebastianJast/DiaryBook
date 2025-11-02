@@ -9,6 +9,7 @@ import { getList, addItem, deleteItem, editItem } from "../services/list";
 import useToken from "./useToken";
 import { jwtDecode } from "jwt-decode";
 import Chatbot from "./Chatbot";
+import { companyInfo } from "../services/companyinfo";
 
 function Main() {
   const [notes, setNotes] = useState([]);
@@ -83,9 +84,58 @@ function Main() {
   }
 
   function chatbot() {
-    setShowChatbot((prev) => !prev)
+    setShowChatbot((prev) => !prev);
   }
 
+  const [chatHistory, setChatHistory] = useState([
+    {
+      hideInChat: true,
+      role: "model",
+      text: companyInfo,
+    },
+  ]);
+  // const [showChatbot, setShowChatbot] = useState(false);
+  const chatBodyRef = useRef();
+
+  const generateBotResponse = async (history) => {
+    // console.log(history);
+
+    // Helper function to update chat history
+    const updateHistory = (text, isError) => {
+      setChatHistory((prev) => [
+        ...prev.filter((msg) => msg.text !== "Thinking..."),
+        { role: "model", text, isError },
+      ]);
+    };
+    // Format chat history for API request
+    history = history.map(({ role, text }) => ({ role, parts: [{ text }] }));
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contents: history }),
+    };
+
+    try {
+      // Make the API call to get the bot's response
+      const response = await fetch(
+        import.meta.env.VITE_API_URL,
+        requestOptions
+      );
+      const data = await response.json();
+      if (!response.ok)
+        throw new Error(data.error.message || "Something went wrong!");
+
+      // Clean and update chat history with bot's response
+      const apiResponseText = data.candidates[0].content.parts[0].text
+        .replace(/\*\*(.*?)\*\*/g, "$1")
+        .trim();
+      updateHistory(apiResponseText);
+      console.log(data);
+    } catch (error) {
+      updateHistory(error.message, true);
+    }
+  };
 
   if (!token) {
     return <Login setToken={setToken} />;
@@ -106,10 +156,22 @@ function Main() {
               onDelete={deleteNote}
               onEdit={editNote}
               chatbot={chatbot}
+              chatHistory={chatHistory}
+              setChatHistory={setChatHistory}
+              generateBotResponse={generateBotResponse}
+              chatBodyRef={chatBodyRef}
+              showChatbot={showChatbot}
             />
           );
         })}
-      <Chatbot showChatbot={showChatbot} chatbot={chatbot}/>
+        <Chatbot
+          showChatbot={showChatbot}
+          chatbot={chatbot}
+          chatHistory={chatHistory}
+          setChatHistory={setChatHistory}
+          generateBotResponse={generateBotResponse}
+          chatBodyRef={chatBodyRef}
+        />
       </div>
       <Footer />
     </div>

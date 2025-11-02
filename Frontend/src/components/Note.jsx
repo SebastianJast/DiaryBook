@@ -3,7 +3,7 @@ import "../styles/note.css";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ChatbotNoteIcon from "./ChatbotNoteIcon";
 
 function Note(props) {
   const [displayForm, setForm] = useState(false);
@@ -43,35 +43,40 @@ function Note(props) {
   }
 
   return (
-      <div className="note">
-        <form
-          className={displayForm ? "edit-note show" : "edit-note hide"}
-          id="edit-note"
-        >
-          <input onChange={changeEdit} name="title" value={note.title} />
-          <textarea onChange={changeEdit} name="content" value={note.content} />
-        </form>
-        <div className={displayForm ? "hide" : "show"}>
-          <h1>{props.title}</h1>
-          <p>{props.content}</p>
-        </div>
-         <button onClick={handleClick}>
-          <DeleteOutlineIcon />
-        </button>
-         <button onClick={props.chatbot}>
-          <ChatBubbleOutlineIcon />
-        </button>
-        <button
-          className={displayForm ? "show" : "hide"}
-          type="sumbit"
-          form="edit-note"
-        >
-          <AddIcon onClick={handleSubmit} />
-        </button>
-        <button className={displayForm ? "hide" : "show"} onClick={handleForm}>
-          <EditIcon />
-        </button>
+    <div className="note">
+      <form
+        className={displayForm ? "edit-note show" : "edit-note hide"}
+        id="edit-note"
+      >
+        <input onChange={changeEdit} name="title" value={note.title} />
+        <textarea onChange={changeEdit} name="content" value={note.content} />
+      </form>
+      <div className={displayForm ? "hide" : "show"}>
+        <h1>{props.title}</h1>
+        <p>{props.content}</p>
       </div>
+      <button onClick={handleClick}>
+        <DeleteOutlineIcon />
+      </button>
+      <ChatbotNoteIcon
+        chatbot={props.chatbot}
+        content={note.content}
+        chatHistory={props.chatHistory}
+        setChatHistory={props.setChatHistory}
+        generateBotResponse={props.generateBotResponse}
+        showChatbot={props.showChatbot}
+      />
+      <button
+        className={displayForm ? "show" : "hide"}
+        type="sumbit"
+        form="edit-note"
+      >
+        <AddIcon onClick={handleSubmit} />
+      </button>
+      <button className={displayForm ? "hide" : "show"} onClick={handleForm}>
+        <EditIcon />
+      </button>
+    </div>
   );
 }
 

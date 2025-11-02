@@ -1,58 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import "../styles/chatbot.css"
 import ChatbotIcon from "./ChatbotIcon";
 import ChatForm from "./ChatForm";
 import ChatMessage from "./ChatMessage";
-import { companyInfo } from "../services/companyinfo";
 
-const Chatbot = (props) => {
-  const [chatHistory, setChatHistory] = useState([{
-    hideInChat: true,
-    role: "model",
-    text: companyInfo
-  }]);
-  // const [showChatbot, setShowChatbot] = useState(false);
-  const chatBodyRef = useRef();
-
-  const generateBotResponse = async (history) => {
-    // console.log(history);
-
-    // Helper function to update chat history
-    const updateHistory = (text, isError) => {
-      setChatHistory((prev) => [
-        ...prev.filter((msg) => msg.text !== "Thinking..."),
-        { role: "model", text, isError },
-      ]);
-    };
-    // Format chat history for API request
-    history = history.map(({ role, text }) => ({ role, parts: [{ text }] }));
-
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents: history }),
-    };
-
-    try {
-      // Make the API call to get the bot's response
-      const response = await fetch(
-        import.meta.env.VITE_API_URL,
-        requestOptions
-      );
-      const data = await response.json();
-      if (!response.ok)
-        throw new Error(data.error.message || "Something went wrong!");
-
-      // Clean and update chat history with bot's response
-      const apiResponseText = data.candidates[0].content.parts[0].text
-        .replace(/\*\*(.*?)\*\*/g, "$1")
-        .trim();
-      updateHistory(apiResponseText);
-      console.log(data);
-    } catch (error) {
-      updateHistory(error.message, true);
-    }
-  };
+const Chatbot = ({chatHistory, setChatHistory, generateBotResponse, chatBodyRef, showChatbot, chatbot}) => {
 
   useEffect(() => {
     // Auto-scroll whenever chat history updates
@@ -63,9 +15,9 @@ const Chatbot = (props) => {
   }, [chatHistory]);
 
   return (
-    <div className={`container ${props.showChatbot ? "show-chatbot" : ""}`}>
+    <div className={`container ${showChatbot ? "show-chatbot" : ""}`}>
       <button
-        onClick={props.chatbot}
+        onClick={chatbot}
         id="chatbot-toggler"
       >
         <span className="material-symbols-rounded">mode_comment</span>
@@ -79,7 +31,7 @@ const Chatbot = (props) => {
             <h2 className="logo-text">Chatbot</h2>
           </div>
           <button
-            onClick={props.chatbot}
+            onClick={chatbot}
             className="material-symbols-rounded"
           >
             keyboard_arrow_down
