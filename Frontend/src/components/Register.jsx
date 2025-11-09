@@ -139,8 +139,8 @@ export default function Register() {
           <div className="register-card-2-text">
             <h2>DiaryBook</h2>
             <p>
-              Collect the most beautiful thoughts from books in one place.
-              Register now or Sign In to dive into the world of literature!
+              Create your personal diary. Capture every thought, dream, and
+              moment that matters. Sign up now and start writing your story.
             </p>
             <Link className="button" to="/">
               Sign In
